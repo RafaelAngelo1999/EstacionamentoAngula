@@ -1,0 +1,158 @@
+<app-menu-header></app-menu-header>
+
+
+
+
+
+
+<div class="container">
+    <div class="col-md-8 offset-md-8">
+        <form class="form" role="form" autocomplete="off" [formGroup]="formulario">
+
+            <span class="anchor" id="formUserEdit"></span>
+            <hr class="my-5">
+
+            <!-- form user info -->
+            <h1>PLAYERS ONLINE PARA DIVIDIR XP</h1>
+            <hr class="my-5">
+            <div class="card card-outline-secondary">
+                <div class="card-header">
+                    <h3 class="mb-5" style="padding-bottom: 15px;">Informações</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Mundo</label>
+                        <div class="col-lg-9">
+                            <select (change)="onChangeMundo($event.target.value)" formControlName="mundo"
+                                class="form-control" size="0">
+                                <option value="" disabled selected hidden>(Selecione)</option>
+                                <option *ngFor="let mundo of listMundo" value={{mundo.name}} id="{{mundo.name}}">
+                                    {{mundo.name}}
+                                </option>
+                            </select>
+                            <div *ngIf="formulario.get('mundo').invalid"> 
+      <small id="emailHelp" class="form-text text-muted msgErro">*Obrigatório</small>
+    </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Level</label>
+                        <div class="col-lg-9">
+                            <input type="text" formControlName="level" class="form-control"
+                                id="exampleFormControlInput1" placeholder="Ex: 100">
+                                <div *ngIf="formulario.get('level').invalid"> 
+      <small id="emailHelp" class="form-text text-muted msgErro">*Obrigatório</small>
+    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-outline-secondary">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-sm-12 col-form-label form-control-label pb-2">Vocação Procurada:
+                        </label>
+                        <div class="col-lg-7 col-md-7 col-sm-9 padobt50">
+                            <select (change)="onChangeVocation($event.target.value)" formControlName="vocation"
+                                class="form-control" size="0">
+                                <option value="" disabled selected hidden>(Selecione)</option>
+                                <option *ngFor="let vocation of listVocation" value={{vocation.name}}
+                                    id="{{vocation.name}}">
+                                    {{vocation.name}}
+                                </option>
+                            </select>
+                            <div *ngIf="formulario.get('vocation').invalid"> 
+      <small id="emailHelp" class="form-text text-muted msgErro">*Obrigatório</small>
+    </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2" [hidden]="this.formulario.value.vocation == null">
+                            <img class="imgResp" src={{imgVocation}}>
+                        </div>
+                    </div>
+
+                    <div class="form-group row ">
+                        <div class="col align-self-center">
+                            <!-- <input type="reset" class="btn btn-damage p-3" value="Resetar"
+                                [disabled]="!formulario.valid" (click)="onLevelShared()">
+                            <input type="reset" class="btn btn-secondary p-3" value="Resetar" (click)="onClean()">
+                            <input type="reset" class="btn btn-secondary p-3" value="GetWorld" (click)="onPesquisarMundo()">
+                            <input type="reset" class="btn btn-secondary p-3" value="ImprimirGrid"
+                                (click)="onImprimir()"> -->
+                            <input type="button" class="btn btn-primary btn-block p-3" [disabled]="!formulario.valid"
+                                value="Pesquisar" (click)="onLevelShared()">
+                        </div>
+                    </div>
+                    <div class="p-5" style="padding: 50px" [hidden]="data == null">
+                        <ejs-grid   [dataSource]='data' 
+                                    [allowSorting]='true' 
+                                    [allowMultiSorting]='true'>
+                                    
+                                    
+                            <e-columns>
+                                <e-column headerText='Status' textAlign='center' width='80'>
+                                <ng-template #template let-data>
+                                    <img src="assets/images/green.png">
+                                    </ng-template>
+                                </e-column>
+                                <e-column field='name' headerText='Nick' textAlign='Right' width='135'></e-column>
+                                <e-column field='level' headerText='Level' width='75'></e-column>
+                                <e-column field='vocation' headerText='Vocation' textAlign='Vocação' width='115'>
+                                </e-column>
+                                <e-column field='ShipCountry' textAlign='center' headerText='Personagem'
+                                    editType='dropdownedit' width=120>
+                                    <ng-template #template let-data>
+                                        <div (click)="onAbrirPersonagem(data.name)"><a style="cursor: pointer"><img
+                                                    src="assets/images/citize.png"></a></div>
+                                    </ng-template>
+                                </e-column>
+                                <!-- <e-column field='ShipCountry' headerText='Ship Country' width='140'></e-column> -->
+                            </e-columns>
+                        </ejs-grid>
+                    </div>
+                </div>
+            </div>
+            <!-- /form user info -->
+        </form>
+    </div>
+    <div class="col-md-4">
+        <span class="anchor" id="formUserEdit"></span>
+        <hr class="my-5">
+
+        <!-- form user info -->
+        <h1>LINK EXTERNOS</h1>
+        <hr class="my-5">
+        <div class="card card-outline-secondary">
+            <div class="card-header">
+                <h3 class="mb-5" style="padding-bottom: 15px;">Pages</h3>
+            </div>
+            <div class="col-md-5 col-sm-12 justify-content-sm-center imgResp">
+                <img style="cursor: pointer" src="assets/images/tibiawiki.png" class="figure-img img-fluid rounded"
+                    alt="TibiaWiki" (click)="onAbrirTibiaWiki()">
+            </div>
+
+            <div class="col-md-5 col-sm-12 justify-content-sm-center imgResp">
+                <img style="cursor: pointer" class="imglogo" src="assets/images/tibiabr.png"
+                    class="figure-img img-fluid rounded" alt="TibiaWiki" (click)="onAbrirTibiaBr()">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <span class="anchor" id="formUserEdit"></span>
+        <hr class="my-5">
+        <div class="col-md-12 col-sm-12 pb-">
+            <div class="col-md-2 col-sm-12">
+                <a class="removeLink" href="https://github.com/RafaelAngelo1999"><img src="assets/images/git.png">
+                    GitHub</a>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <a class="removeLink" href="https://www.linkedin.com/in/rafael-angelo-412860180/"><img
+                        src="assets/images/link.png"> Linkedin</a>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 pb-">
+        <span class="anchor" id="formUserEdit"></span>
+        <hr class="my-5">
+        </div>
+    </div>
+ </div>

@@ -1,0 +1,53 @@
+<div class="search-div" style="padding: 10px; padding-left: 15px;">
+    <button mat-raised-button color="primary" (click)="onCreate()">
+      <mat-icon>add</mat-icon>Add Veiculo
+    </button>
+    <mat-form-field class="search-form-field" style="padding-left: 15px;" floatLabel="never">
+      <input matInput [(ngModel)]="searchKey" placeholder="Pesquisar" autocomplete="on" (keyup)="applyFilter()">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="listData"  matSort>
+      <ng-container matColumnDef="placa">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Placa</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.placa}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="marca">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Marca</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.marca}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="modelo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Modelo</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.modelo}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="cor">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Cor</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.cor}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="onEdit(row)"><mat-icon>launch</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="onDelete(row.$key)"><mat-icon>delete_outline</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          Carregando Dados...
+        </mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          Sem Dados.
+        </mat-footer-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
+      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+  </div>

@@ -1,0 +1,132 @@
+<mat-toolbar>
+  <mat-icon class="icon-m-r">account_circle</mat-icon><span>{{service.form.controls['$key'].value?"Modificar Cliente":"Novo Cliente"}}</span>
+  <span class="fill-remaining-space"></span>
+  <span class="example-spacer"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="icon-m-r">info</mat-icon>
+        Informação
+      </ng-template>
+      <mat-grid-list cols="1" rowHeight="300px">
+        <mat-grid-tile>
+          <div class="controles-container">
+            <input type="hidden" formControlName="$key">
+            <mat-form-field>
+              <input formControlName="nome" matInput placeholder="Nome *">
+              <mat-error>Este campo é obrigatório.</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input formControlName="cpf" mask="000.000.000-00" matInput placeholder="Cpf">
+              <mat-error>Endereço de email invalido.</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input formControlName="telefone" mask="(00) 00000-0000" matInput placeholder="Telefone *">
+              <mat-error *ngIf="service.form.controls['telefone'].errors?.required">Este campo é obrigatório.
+              </mat-error>
+              <mat-error *ngIf="service.form.controls['telefone'].errors?.minlength">São necessários no mínimo 11
+                caracteres.</mat-error>
+            </mat-form-field>
+            <div class="add-bottom-padding">
+              <mat-checkbox formControlName="isPermanent">Usuario Ativo</mat-checkbox>
+            </div>
+            <div class="button-row">
+              <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Submit</button>
+              <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="icon-m-r">directions_car</mat-icon>
+        Veiculos
+      </ng-template>
+      <mat-grid-list cols="1" rowHeight="300px">
+        <mat-grid-tile>
+          <div class="controles-container">
+            <mat-grid-list cols="4" rowHeight="70px">
+              <mat-grid-tile [colspan]="3">
+                <mat-card-title style="margin: 15px;">Lista de Veiculos Cadastrados </mat-card-title>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                <button mat-raised-button color="warn" class="example-spacer">Adicionar</button>
+              </mat-grid-tile>
+          </mat-grid-list>
+            <div class="example-container mat-elevation-z8 ">
+              <mat-table [dataSource]="dataSourceVeiculos" matSort>
+                <ng-container matColumnDef="cod">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Cod</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.cod}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="placa">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Placa</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.placa}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="modelo">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Modelo</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.modelo}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="cor">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Cor</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.cor}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <button mat-icon-button (click)="onEdit(row)">
+                      <mat-icon>launch</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="onDelete(row.$key)">
+                      <mat-icon>delete_outline</mat-icon>
+                    </button>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="loading">
+                  <mat-footer-cell *matFooterCellDef colspan="6">
+                    Carregando Dados...
+                  </mat-footer-cell>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                  <mat-footer-cell *matFooterCellDef colspan="6">
+                    Sem Dados.
+                  </mat-footer-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSourceVeiculos!=null}">
+                </mat-footer-row>
+                <mat-footer-row *matFooterRowDef="['noData']"
+                  [ngClass]="{'hide':!(dataSourceVeiculos!=null && dataSourceVeiculos.data.length==0)}">
+                </mat-footer-row>
+              </mat-table>
+              <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator> -->
+            </div>
+            <!-- <mat-form-field>
+            <mat-select formControlName="department" placeholder="Department">
+              <mat-option>None</mat-option>
+              <ng-container *ngFor="let department of [1,2,3,4]">
+                <mat-option value="{{department.$key}}">{{department.code}}-{{department.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="hireDate" matInput [matDatepicker]="picker" placeholder="Hire Date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field> -->
+            
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+  </mat-tab-group>
+
+</form>

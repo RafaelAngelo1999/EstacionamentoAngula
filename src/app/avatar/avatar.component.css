@@ -1,0 +1,31 @@
+.padobt50 {
+padding-bottom: 80px;
+}
+.medio{
+    width: 50%;
+}
+.imglogo {
+    width: 140px;
+    height: 146px;
+
+}
+.msgErro{
+      color: red !important;
+}
+.removeLink{
+    color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+@media only screen and (max-width: 1024px) {
+.imgResp{
+    text-align-last: center;
+}
+}

@@ -1,0 +1,131 @@
+<mat-toolbar>
+  <mat-icon class="icon-m-r">account_circle</mat-icon>
+  <span>{{service.form.controls['$key'].value?"Modificar Cliente":"Novo Cliente"}}</span>
+  <span class="fill-remaining-space"></span>
+  <span class="example-spacer"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="icon-m-r">info</mat-icon>
+        Informação
+      </ng-template>
+      <mat-grid-list cols="4" rowHeight="70px" >
+              <mat-grid-tile [colspan]="1" >
+                <mat-card-title style="margin: 15px;">Informações</mat-card-title>
+              </mat-grid-tile>
+
+            </mat-grid-list>
+      <mat-grid-list cols="2" rowHeight="180px">
+        <mat-grid-tile>
+          <div class="controles-container">
+            <!-- <input type="hidden" formControlName="$key"> -->
+            <mat-form-field appearance="outline"> 
+              <input formControlName="placa" matInput placeholder="Placa">
+            </mat-form-field>
+            <mat-form-field appearance="outline"> 
+              <mat-label>Marca</mat-label>
+              <mat-select [formControl]="service.form.get('marca')" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let animal of marcas" [value]="animal">
+                  {{animal}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="service.form.get('modelo').hasError('required')">Please choose an animal</mat-error>
+            </mat-form-field>
+            <!-- legacy' | 'standard' | 'fill' | 'outline' -->
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div class="controles-container">
+            <mat-form-field appearance="outline"> 
+              <mat-label>Modelo</mat-label>
+              <mat-select [formControl]="service.form.get('modelo')" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let animal of modelos" [value]="animal">
+                  {{animal}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="service.form.get('modelo').hasError('required')">Please choose an animal</mat-error>
+            </mat-form-field >
+            <mat-form-field appearance="outline"> 
+              <mat-label>Cor</mat-label>
+              <mat-select [formControl]="service.form.get('cor')" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let animal of modelos" [value]="animal">
+                  {{animal}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="service.form.get('cor').hasError('required')">Please choose an animal</mat-error>
+            </mat-form-field >
+            <!-- <button (click)="teste()"></button> -->
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    <mat-grid-list cols="2" rowHeight="50px">
+      <mat-grid-tile>
+      <div class="button-row " fxLayout="row" fxLayoutAlign="end center" >
+              <span class="fill-remaining-space"></span>
+              <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Submit</button>
+              <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+            </div>
+  </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="icon-m-r">account_box</mat-icon>
+        Cliente
+      </ng-template>
+      <mat-grid-list cols="1" rowHeight="300px">
+        <mat-grid-tile>
+          <div class="controles-container">
+            <mat-grid-list cols="4" rowHeight="70px">
+              <mat-grid-tile [colspan]="1">
+                <mat-card-title style="margin: 15px;">Vinculado</mat-card-title>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <div class="example-container ">
+              <mat-form-field>
+                <mat-label>Cliente</mat-label>
+                <mat-select>
+                   <mat-form-field appearance="legacy">
+                    <mat-label>Outline form field</mat-label>
+                    <input style="color:white" matInput placeholder="Cliente" (keyup)="onKey($event.target.value)">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  </mat-form-field>
+                  <mat-option *ngFor="let state of selectedStates" [value]="state">{{state}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!-- <mat-form-field appearance="outline"> 
+                <mat-label>Modelo</mat-label>
+                <mat-select [formControl]="service.form.get('modelo')" required>
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let animal of modelos" [value]="animal">
+                    {{animal}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="service.form.get('modelo').hasError('required')">Please choose an animal</mat-error>
+              </mat-form-field > -->
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+  </mat-tab-group>
+</form>
+<!-- <h4>mat-select</h4>
+<mat-form-field>
+  <mat-label>State</mat-label>
+  <mat-select>
+     <input (keyup)="onKey($event.target.value)"> // **Send user input to TS**
+    <mat-option>None</mat-option>
+    <mat-option *ngFor="let state of selectedStates" [value]="state">{{state}}</mat-option>
+  </mat-select>
+</mat-form-field> -->

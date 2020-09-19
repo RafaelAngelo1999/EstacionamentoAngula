@@ -1,0 +1,70 @@
+<mat-toolbar>
+  <mat-icon class="icon-m-r">account_circle</mat-icon>
+  <span>Valor de Horarios</span>
+  <span class="fill-remaining-space"></span>
+  <span class="example-spacer"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="icon-m-r">info</mat-icon>
+        Informação
+      </ng-template>
+      <mat-grid-list cols="4" rowHeight="70px" >
+              <mat-grid-tile [colspan]="1" >
+                <mat-card-title style="margin: 15px;">Informações</mat-card-title>
+              </mat-grid-tile>
+
+            </mat-grid-list>
+      <mat-grid-list cols="2" rowHeight="180px">
+        <mat-grid-tile>
+          <div class="controles-container">
+            <!-- <input type="hidden" formControlName="$key"> -->
+            <mat-form-field appearance="outline"> 
+              <input formControlName="placa" matInput placeholder="Placa">
+            </mat-form-field>
+            <mat-form-field appearance="outline"> 
+              <mat-label>Marca</mat-label>
+            </mat-form-field>
+            <!-- legacy' | 'standard' | 'fill' | 'outline' -->
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div class="controles-container">
+            <mat-form-field appearance="outline"> 
+              <mat-label>Modelo</mat-label>
+            </mat-form-field >
+            <mat-form-field appearance="outline"> 
+              <mat-label>Cor</mat-label>
+            </mat-form-field >
+            <!-- <button (click)="teste()"></button> -->
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    <mat-grid-list cols="2" rowHeight="50px">
+      <mat-grid-tile>
+      <div class="button-row " fxLayout="row" fxLayoutAlign="end center" >
+              <span class="fill-remaining-space"></span>
+              <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Submit</button>
+              <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+            </div>
+  </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+  </mat-tab-group>
+</form>
+<!-- <h4>mat-select</h4>
+<mat-form-field>
+  <mat-label>State</mat-label>
+  <mat-select>
+     <input (keyup)="onKey($event.target.value)"> // **Send user input to TS**
+    <mat-option>None</mat-option>
+    <mat-option *ngFor="let state of selectedStates" [value]="state">{{state}}</mat-option>
+  </mat-select>
+</mat-form-field> -->
