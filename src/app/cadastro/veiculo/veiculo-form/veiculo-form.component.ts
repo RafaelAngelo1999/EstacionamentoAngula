@@ -12,8 +12,8 @@ import { GlobalService } from 'src/app/global.service';
 })
 export class VeiculoFormComponent implements OnInit {
 
-  marcas: string[] = ['seucu', 'meucu', 'nossocu'];
-  modelos: string[] = ['oi', 'depressao', 'morrer'];
+  marcas: string[] = ['tudo', 'joia', 'comigo'];
+  modelos: string[] = ['oi', 'tudobem', 'comvoce'];
   states: string[] = [
     'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
     'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
