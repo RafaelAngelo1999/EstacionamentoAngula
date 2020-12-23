@@ -39,6 +39,9 @@ mat-radio-group mat-radio-button{
     margin-top: 20px;
     
 }
+.mr-r-5{
+  margin-right: 5px;
+}
 
 /* notification */
 snack-bar-container.success {

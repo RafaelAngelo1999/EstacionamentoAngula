@@ -27,6 +27,10 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Cor</mat-header-cell>
         <mat-cell *matCellDef="let element">{{element.cor}}</mat-cell>
       </ng-container>
+      <ng-container matColumnDef="cliente">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.cliente}}</mat-cell>
+      </ng-container>
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let row">

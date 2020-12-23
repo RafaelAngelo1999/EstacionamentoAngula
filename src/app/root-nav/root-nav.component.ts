@@ -17,14 +17,14 @@ isMenuOpen = true;
 contentMargin = 240;
 
 
-onTaxa() {
-  this.service.initializeFormGroup();
-  const dialogConfig = new MatDialogConfig();
-  dialogConfig.disableClose = true;
-  dialogConfig.autoFocus = true;
-  dialogConfig.width = "60%";
-  this.dialog.open(TaxaFormComponent,dialogConfig);
-}
+// onTaxa() {
+//   this.service.initializeFormGroup();
+//   const dialogConfig = new MatDialogConfig();
+//   dialogConfig.disableClose = true;
+//   dialogConfig.autoFocus = true;
+//   dialogConfig.width = "60%";
+//   this.dialog.open(TaxaFormComponent,dialogConfig);
+// }
 
    onToolbarMenuToggle() {
     console.log('On toolbar toggled', this.isMenuOpen);

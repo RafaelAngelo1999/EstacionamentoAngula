@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "estacionamento"
+  "defaultProject": "estacionamento",
+  "cli": {
+    "analytics": "1d036213-29a7-4e3e-b69d-97d26979dade"
+  }
 }

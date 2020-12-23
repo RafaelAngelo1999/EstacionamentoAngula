@@ -6,6 +6,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NotificationService } from '../../../compartilhado/service/notification.service';
 import { ClienteService } from '../cliente.service';
 import { ClienteFormComponent } from '../cliente-form/cliente-form.component';
+import { ClienteModel } from 'src/app/compartilhado/model/cliente';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cliente-grid',
@@ -13,22 +15,32 @@ import { ClienteFormComponent } from '../cliente-form/cliente-form.component';
   styleUrls: ['./cliente-grid.component.css']
 })
 export class ClienteGridComponent implements OnInit {
-  
+  subsListClienteChanger: Subscription;
+
   constructor(private service: ClienteService,
-    //private departmentService: DepartmentService,
     private dialog: MatDialog,
     private notificationService: NotificationService) { }
 
-  frutas = [{nome: "rafael" , cpf: '123' , telefone: "1,0079" , veiculos: 'H' },
-  {nome: "gabriel" , cpf: '312' , telefone: "1,0079" , veiculos: 'I' }];
-  listData: MatTableDataSource<any> = new MatTableDataSource(this.frutas);
+  // frutas = [{nome: "rafael" , cpf: '123' , telefone: "1,0079" , veiculos: 'H' },
+  // {nome: "gabriel" , cpf: '312' , telefone: "1,0079" , veiculos: 'I' }];
+  listCliente;
+  listData = new MatTableDataSource<ClienteModel>();
   displayedColumns: string[] = ['nome', 'cpf', 'telefone', 'veiculos', 'actions'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: string;
 
   ngOnInit() {
-    console.log(this.listData)
+    this.listCliente = this.service.getCliente();
+    this.listData = new MatTableDataSource<ClienteModel>(this.listCliente);
+
+    this.service.getCliente();
+    this.subsListClienteChanger = this.service.listClienteChange.subscribe((response) => {
+      this.listData = new MatTableDataSource<ClienteModel>(response.msg);
+      console.log(response.msg,this.listData )
+    });
+
+    console.log(this.listData,this.listCliente )
     // this.service.getEmployees().subscribe(
     //   list => {
     //     let array = list.map(item => {
@@ -61,21 +73,24 @@ export class ClienteGridComponent implements OnInit {
 
 
   onCreate() {
-    this.service.initializeFormGroup();
+    this.service.isEdit = false;
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
+    dialogConfig.width = "90%";
+    dialogConfig.height = "70%%";
     this.dialog.open(ClienteFormComponent,dialogConfig);
   }
 
   onEdit(row){
-    this.service.populateForm(row);
+    this.service.cliente = row;
+    this.service.isEdit = true;
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    this.dialog.open(ClienteGridComponent,dialogConfig);
+    dialogConfig.width = "90%";
+    dialogConfig.height = "70%%";
+    this.dialog.open(ClienteFormComponent,dialogConfig);
   }
 
   onDelete($key){

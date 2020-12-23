@@ -19,10 +19,10 @@ export class VeiculoGridComponent implements OnInit {
     private dialog: MatDialog,
     private notificationService: NotificationService) { }
 
-  frutas = [{placa: "rafael" , marca: '123' , modelo: "1,0079" , cor: 'H' },
-  {placa: "rafael" , marca: '123' , modelo: "1,0079" , cor: 'H' }];
+  frutas = [{placa: "rafael" , marca: '123' , modelo: "1,0079" , cor: 'H', cliente: 'rafael' },
+  {placa: "rafael" , marca: '123' , modelo: "1,0079" , cor: 'H', cliente: 'gabriel' }];
   listData: MatTableDataSource<any> = new MatTableDataSource(this.frutas);
-  displayedColumns: string[] = ['placa', 'marca', 'modelo', 'cor', 'actions'];
+  displayedColumns: string[] = ['placa', 'marca', 'modelo', 'cor','cliente', 'actions'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: string;

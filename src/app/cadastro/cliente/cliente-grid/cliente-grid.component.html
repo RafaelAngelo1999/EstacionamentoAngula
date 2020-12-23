@@ -16,16 +16,16 @@
       <mat-cell *matCellDef="let element">{{element.nome}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="cpf">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>CPF</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.cpf}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>CPF</mat-header-cell>
+      <mat-cell *matCellDef="let element" >{{element.cpf | mask: '000.000.000-00'}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="telefone">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Telefone</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.telefone}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.telefone| mask: '(00) 00000-0000'}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="veiculos">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Veiculos</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.veiculos}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
